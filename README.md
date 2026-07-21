@@ -51,3 +51,82 @@ The addon includes:
 - Slash command support
 
 Open the window using:
+
+/ndxp
+
+or click the minimap icon.
+
+---
+
+## Compatibility
+
+Supported:
+
+✅ World of Warcraft 3.3.5 clients  
+✅ Ascension WoW  
+✅ Custom 3.3.5 private servers  
+
+The addon was developed and tested primarily on:
+
+**Ascension WoW - Conquest of Azeroth - Rexxar server**
+**Warmane - 3.3.5 servers**
+
+---
+
+## Installation
+
+1. Download the addon.
+2. Extract the folder:
+
+into:
+
+World of Warcraft/
+└── Interface/
+└── AddOns/
+└── NovaDungeonXP
+
+3. Restart the game or use:
+4. Enable the addon in the character selection screen.
+
+---
+
+## Commands
+
+Open statistics window:
+
+/ndxp
+
+Reset saved history:
+
+/ndxp reset
+
+---
+
+## Development
+
+Created and developed by:
+
+**Yevhen Peresunko**
+
+Nova Dungeon XP was created as a personal project to improve dungeon leveling tracking and provide better statistics for the Ascension WoW community.
+
+---
+
+## Credits
+
+Libraries used:
+
+- LibStub
+- LibDataBroker-1.1
+- LibDBIcon-1.0
+- CallbackHandler-1.0
+
+Thanks to the developers of these open-source libraries.
+
+---
+
+## License
+
+This project is released under the GPL-3.0 License.
+
+You are free to modify and redistribute this addon while keeping the original credits.
