@@ -80,12 +80,9 @@ The addon was developed and tested primarily on:
 
 into:
 
-World of Warcraft/
-└── Interface/
-└── AddOns/
-└── NovaDungeonXP
+World of Warcraft/Interface/AddOns/NovaDungeonXP
 
-3. Restart the game or use:
+3. Restart the game.
 4. Enable the addon in the character selection screen.
 
 ---
