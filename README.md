@@ -28,6 +28,11 @@ Nova Dungeon XP automatically tracks:
 
 ---
 
+## Screenshots
+<img width="1200" height="788" alt="photo_2026-07-21_13-22-14" src="https://github.com/user-attachments/assets/baab6172-00c4-46f3-84bd-ed1ab3b36529" />
+<img width="630" height="308" alt="2026-07-21_133606" src="https://github.com/user-attachments/assets/b951a1a0-c5db-49ab-8b6b-2a7b818c5992" />
+<img width="1920" height="1200" alt="WoWScrnShot_072126_133630" src="https://github.com/user-attachments/assets/2b43ad43-4fbd-4d0c-89cd-6dc38ffcc82b" />
+
 ### Run History
 
 The addon stores your previous dungeon runs and displays them in a simple statistics window.
