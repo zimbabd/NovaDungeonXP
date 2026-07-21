@@ -1,0 +1,9 @@
+## Interface: 30300
+## Title: Nova Dungeon XP
+## Notes: Tracks dungeon XP, XP/hour and history
+## Author: zimbabd
+## Version: 3.0
+## SavedVariables: NovaDungeonXPDB, NovaDungeonXPMinimapDB
+
+embeds.xml
+NovaDungeonXP.lua
