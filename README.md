@@ -87,6 +87,7 @@ into:
 
 World of Warcraft/Interface/AddOns/NovaDungeonXP
 
+3. Rename the folder from `NovaDungeonXP-main` to `NovaDungeonXP` if needed.
 3. Restart the game.
 4. Enable the addon in the character selection screen.
 
