@@ -29,9 +29,10 @@ Nova Dungeon XP automatically tracks:
 ---
 
 ## Screenshots
-<img width="1200" height="788" alt="photo_2026-07-21_13-22-14" src="https://github.com/user-attachments/assets/baab6172-00c4-46f3-84bd-ed1ab3b36529" />
+<img width="1009" height="549" alt="image" src="https://github.com/user-attachments/assets/6b22cca6-57d7-427d-9ab1-c35638b1d0c3" />
 <img width="630" height="308" alt="2026-07-21_133606" src="https://github.com/user-attachments/assets/b951a1a0-c5db-49ab-8b6b-2a7b818c5992" />
-<img width="1920" height="1200" alt="WoWScrnShot_072126_133630" src="https://github.com/user-attachments/assets/2b43ad43-4fbd-4d0c-89cd-6dc38ffcc82b" />
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/db6cd7e1-216d-4c0c-976c-d69506ba23cc" />
+
 
 ### Run History
 
@@ -87,6 +88,7 @@ into:
 
 World of Warcraft/Interface/AddOns/NovaDungeonXP
 
+3. Rename the folder from `NovaDungeonXP-main` to `NovaDungeonXP` if needed.
 3. Restart the game.
 4. Enable the addon in the character selection screen.
 
