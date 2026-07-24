@@ -40,6 +40,8 @@ local close
 local scrollFrame
 local scrollChild
 local headerButtons
+local clearBtn
+local DeleteRun
 
 
 ------------------------------------------------
@@ -314,23 +316,54 @@ scrollFrame:SetScrollChild(scrollChild)
 
 local function CreateRow(index)
     local row = {}
-    row.num = scrollChild:CreateFontString(nil, "OVERLAY")
-    row.name = scrollChild:CreateFontString(nil, "OVERLAY")
-    row.time = scrollChild:CreateFontString(nil, "OVERLAY")
-    row.xp = scrollChild:CreateFontString(nil, "OVERLAY")
-    row.xph = scrollChild:CreateFontString(nil, "OVERLAY")
+    
+    -- Create a frame for the row to handle mouse events and background
+    row.frame = CreateFrame("Frame", nil, scrollChild)
+    row.frame:SetWidth(700)
+    row.frame:SetHeight(24)
+    local y = - ((index - 1) * 24)
+    row.frame:SetPoint("TOPLEFT", 0, y)
+    row.frame:EnableMouse(true)
+    
+    -- Background texture for highlighting
+    row.bg = row.frame:CreateTexture(nil, "BACKGROUND")
+    row.bg:SetAllPoints(row.frame)
+    row.bg:SetTexture(0, 0, 0, 0) -- Fully transparent by default
+    
+    -- OnEnter/OnLeave for hover highlight
+    row.frame:SetScript("OnEnter", function()
+        row.bg:SetTexture(0.3, 0.3, 0.3, 0.5) -- Semi-transparent gray
+    end)
+    row.frame:SetScript("OnLeave", function()
+        row.bg:SetTexture(0, 0, 0, 0) -- Back to transparent
+    end)
+    
+    -- Font strings parented to the row frame
+    row.num = row.frame:CreateFontString(nil, "OVERLAY")
+    row.name = row.frame:CreateFontString(nil, "OVERLAY")
+    row.time = row.frame:CreateFontString(nil, "OVERLAY")
+    row.xp = row.frame:CreateFontString(nil, "OVERLAY")
+    row.xph = row.frame:CreateFontString(nil, "OVERLAY")
     local font = "Fonts\\ARIALN.TTF"
     row.num:SetFont(font, 16)
     row.name:SetFont(font, 16)
     row.time:SetFont(font, 16)
     row.xp:SetFont(font, 16)
     row.xph:SetFont(font, 16)
-    local y = - ((index - 1) * 24)
-    row.num:SetPoint("TOPLEFT", 0, y)
-    row.name:SetPoint("TOPLEFT", 35, y)
-    row.time:SetPoint("TOPLEFT", 280, y)
-    row.xp:SetPoint("TOPLEFT", 380, y)
-    row.xph:SetPoint("TOPLEFT", 500, y)
+    
+    -- Position font strings relative to the row frame
+    row.num:SetPoint("TOPLEFT", 0, 0)
+    row.name:SetPoint("TOPLEFT", 35, 0)
+    row.time:SetPoint("TOPLEFT", 280, 0)
+    row.xp:SetPoint("TOPLEFT", 380, 0)
+    row.xph:SetPoint("TOPLEFT", 500, 0)
+    
+    -- Delete "X" button
+    row.deleteBtn = CreateFrame("Button", nil, row.frame, "UIPanelCloseButton")
+    row.deleteBtn:SetWidth(20)
+    row.deleteBtn:SetHeight(20)
+    row.deleteBtn:SetPoint("TOPRIGHT", 0, 0)
+    
     return row
 end
 
@@ -390,11 +423,55 @@ local function UpdateWindow()
         rows[i].time:SetText(color..string.format("%dm", v.time or 0)..reset)
         rows[i].xp:SetText(color..FormatXP(v.xp or 0)..reset)
         rows[i].xph:SetText(color..FormatXP(v.xph or 0)..reset)
+        
+        -- Set up delete button for this row
+        rows[i].deleteBtn:SetScript("OnClick", function()
+            DeleteRun(v)
+        end)
     end
 
     local numRows = #display
     scrollChild:SetHeight(numRows * 24)
 end
+
+function DeleteRun(runToDelete)
+    -- Find and remove the run from history
+    for i, run in ipairs(NovaDungeonXPDB.history) do
+        if run == runToDelete then
+            table.remove(NovaDungeonXPDB.history, i)
+            break
+        end
+    end
+    -- Refresh the display
+    UpdateWindow()
+end
+
+-- Clear History Button
+clearBtn = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+clearBtn:SetWidth(100)
+clearBtn:SetHeight(24)
+clearBtn:SetPoint("TOPRIGHT", -10, -30)
+clearBtn:SetText("Clear History")
+
+-- Function to clear history with confirmation
+local function ClearHistory()
+    StaticPopupDialogs["NOVADUNGEONXP_CLEAR_HISTORY"] = {
+        text = "Are you sure you want to clear all dungeon history?",
+        button1 = "Yes",
+        button2 = "No",
+        OnAccept = function()
+            NovaDungeonXPDB.history = {}
+            UpdateWindow()
+        end,
+        timeout = 0,
+        whileDead = true,
+        hideOnEscape = true,
+        preferredIndex = 3,
+    }
+    StaticPopup_Show("NOVADUNGEONXP_CLEAR_HISTORY")
+end
+
+clearBtn:SetScript("OnClick", ClearHistory)
 
 frame:SetScript("OnShow", UpdateWindow)
 
