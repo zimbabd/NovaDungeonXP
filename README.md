@@ -5,15 +5,7 @@
 
 ## Overview
 
-<<<<<<< HEAD
 **Nova Dungeon XP** is a lightweight World of Warcraft addon for tracking dungeon leveling efficiency. It records XP gains, run duration, XP per hour, and other useful statistics for every dungeon run.
-=======
-**Nova Dungeon XP** is a lightweight World of Warcraft addon designed to track dungeon leveling efficiency by recording XP gains, run duration, XP per hour and other useful statistics.
-
-The addon was created specifically for the **Ascension WoW community**, but it is compatible with **all World of Warcraft 3.3.5 clients** that support standard addon functionality.
-
-The goal of this addon is to help players compare dungeon runs and find the most efficient leveling routes.
->>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 
 ---
 
@@ -25,17 +17,10 @@ Nova Dungeon XP automatically tracks:
 
 - Dungeon name
 - Run start and end time
-<<<<<<< HEAD
 - Total run duration (minutes and seconds)
 - Experience gained (with correct levelup handling)
 - Estimated XP per hour
 - Number of hostile NPCs killed
-=======
-- Total run duration
-- Experience gained
-- Estimated XP per hour
-- Number of mobs killed
->>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 
 ---
 
@@ -51,7 +36,6 @@ The addon stores your previous dungeon runs and displays them in a simple statis
 
 Features:
 
-<<<<<<< HEAD
 - Keeps a history of up to 100 previous runs
 - Shows your best XP/hour run highlighted in green
 - Easy comparison between different dungeons
@@ -59,12 +43,6 @@ Features:
 - Hover row highlight
 - Per-row delete button
 - Clear all history with confirmation
-=======
-- Keeps a history of previous runs
-- Shows your best XP/hour run
-- Highlights the most efficient run
-- Easy comparison between different dungeons
->>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 
 ---
 
@@ -73,11 +51,7 @@ Features:
 The addon includes:
 
 - Movable statistics window
-<<<<<<< HEAD
 - Scrollable history table
-=======
-- Resizable interface
->>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 - Minimap button
 - Slash command support
 
@@ -93,44 +67,22 @@ or click the minimap icon.
 
 Supported:
 
-<<<<<<< HEAD
 ✅ World of Warcraft 3.3.5 clients
 ✅ Warmane - 3.3.5 servers
 ✅ Other standard WotLK 3.3.5 private servers
-=======
-✅ World of Warcraft 3.3.5 clients  
-✅ Ascension WoW  
-✅ Custom 3.3.5 private servers  
-
-The addon was developed and tested primarily on:
-
-**Ascension WoW - Conquest of Azeroth - Rexxar server**
-**Warmane - 3.3.5 servers**
->>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 
 ---
 
 ## Installation
 
 1. Download the addon.
-<<<<<<< HEAD
 2. Extract the folder into:
-=======
-2. Extract the folder:
-
-into:
->>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 
 World of Warcraft/Interface/AddOns/NovaDungeonXP
 
 3. Rename the folder from `NovaDungeonXP-main` to `NovaDungeonXP` if needed.
-<<<<<<< HEAD
 4. Restart the game.
 5. Enable the addon in the character selection screen.
-=======
-3. Restart the game.
-4. Enable the addon in the character selection screen.
->>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 
 ---
 
@@ -152,11 +104,6 @@ Created and developed by:
 
 **Yevhen Peresunko**
 
-<<<<<<< HEAD
-=======
-Nova Dungeon XP was created as a personal project to improve dungeon leveling tracking and provide better statistics for the Ascension WoW community.
-
->>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 ---
 
 ## Credits
@@ -177,7 +124,4 @@ Thanks to the developers of these open-source libraries.
 This project is released under the GPL-3.0 License.
 
 You are free to modify and redistribute this addon while keeping the original credits.
-<<<<<<< HEAD
 
-=======
->>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce

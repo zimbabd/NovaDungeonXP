@@ -1,6 +1,5 @@
 # Changelog
 
-<<<<<<< HEAD
 ## v4.0
 
 ### Fixes
@@ -20,8 +19,6 @@
 - Removed all references to Ascension WoW. Addon targets Warmane and standard WotLK 3.3.5 clients.
 
 
-=======
->>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 ## v3.2
 
 ### New
@@ -42,7 +39,4 @@
 
 ### Improvements
 - Improved history table usability.
-<<<<<<< HEAD
 
-=======
->>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
