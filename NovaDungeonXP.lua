@@ -13,6 +13,7 @@ end
 if not NovaDungeonXPDB.minimap then
     NovaDungeonXPDB.minimap = {
         angle = 180,
+<<<<<<< HEAD
         hide  = false
     }
 end
@@ -21,11 +22,18 @@ end
 if NovaDungeonXPDB.activeRun == nil then
     NovaDungeonXPDB.activeRun = false
 end
+=======
+        hide = false
+    }
+end
+
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 
 ------------------------------------------------
 -- ALL Variables (declared first!)
 ------------------------------------------------
 
+<<<<<<< HEAD
 local running     = false
 local dungeonName = ""
 local startTime   = 0
@@ -38,6 +46,19 @@ local mobs     = 0
 local sortKey = nil
 local sortAsc = true
 local rows    = {}
+=======
+local running = false
+local dungeonName = ""
+local startTime = 0
+local startXP = 0
+
+local gainedXP = 0
+local mobs = 0
+
+local sortKey = nil
+local sortAsc = true
+local rows = {}
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 
 local frame
 local title
@@ -48,24 +69,38 @@ local headerButtons
 local clearBtn
 local DeleteRun
 
+<<<<<<< HEAD
 -- Flag: waiting for GetInstanceInfo to return a valid name
 local pendingStart        = false
 local pendingStartElapsed = 0
+=======
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 
 ------------------------------------------------
 -- Helpers
 ------------------------------------------------
 
 local function FormatXP(xp)
+<<<<<<< HEAD
     if xp >= 1000000 then
         return string.format("%.1fm", xp / 1000000)
     elseif xp >= 1000 then
         return string.format("%.1fk", xp / 1000)
+=======
+
+    if xp >= 1000000 then
+        return string.format("%.1fm", xp / 1000000)
+
+    elseif xp >= 1000 then
+        return string.format("%.1fk", xp / 1000)
+
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
     else
         return xp
     end
 end
 
+<<<<<<< HEAD
 -- Format raw seconds -> "Xm Ys"
 local function FormatDuration(seconds)
     local m = math.floor(seconds / 60)
@@ -78,10 +113,17 @@ local function FormatDuration(seconds)
 end
 
 local function SaveRun(runDate, entered, left, duration, xph)
+=======
+local function SaveRun(runDate, entered, left, duration, xph)
+
+    local minutes = duration / 60
+
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
     table.insert(
         NovaDungeonXPDB.history,
         1,
         {
+<<<<<<< HEAD
             dungeon  = dungeonName,
             date     = runDate,
             entered  = entered,
@@ -90,10 +132,26 @@ local function SaveRun(runDate, entered, left, duration, xph)
             xp       = gainedXP,
             xph      = xph,
             mobs     = mobs
+=======
+            dungeon = dungeonName,
+
+            date = runDate,
+
+            entered = entered,
+            left = left,
+
+            time = minutes,
+
+            xp = gainedXP,
+            xph = xph,
+
+            mobs = mobs
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
         }
     )
 
     while #NovaDungeonXPDB.history > 100 do
+<<<<<<< HEAD
         table.remove(NovaDungeonXPDB.history)
     end
 end
@@ -142,6 +200,13 @@ local VALID_INSTANCE_TYPES = {
 local function IsInDungeon()
     local inInstance, instanceType = IsInInstance()
     return inInstance and VALID_INSTANCE_TYPES[instanceType]
+=======
+        table.remove(
+            NovaDungeonXPDB.history
+        )
+    end
+
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 end
 
 
@@ -149,6 +214,7 @@ end
 -- Dungeon start/end
 ------------------------------------------------
 
+<<<<<<< HEAD
 local function TryStartDungeon()
     local name = GetInstanceInfo()
 
@@ -182,10 +248,33 @@ local function StartDungeon()
 end
 
 local function FinishDungeon()
+=======
+local function StartDungeon()
+
+    local name = GetInstanceInfo()
+
+    dungeonName = name
+
+    startTime = time()
+    startXP = UnitXP("player")
+
+    gainedXP = 0
+    mobs = 0
+
+    running = true
+
+    print("|cff00ff00Nova Dungeon XP:|r "..name.." started")
+
+end
+
+local function FinishDungeon()
+
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
     if not running then
         return
     end
 
+<<<<<<< HEAD
     local endTime  = time()
     local duration = endTime - startTime
 
@@ -193,15 +282,28 @@ local function FinishDungeon()
     if duration < 60 and gainedXP == 0 then
         running = false
         ClearActiveRun()
+=======
+    local endTime = time()
+    local duration = endTime - startTime
+
+    -- Игнорируем случайные заходы меньше минуты без опыта
+    if duration < 60 and gainedXP == 0 then
+        running = false
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
         return
     end
 
     local xph = 0
+<<<<<<< HEAD
+=======
+
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
     if duration > 0 then
         xph = math.floor(gainedXP / duration * 3600)
     end
 
     local runDate = date("%d.%m.%Y", startTime)
+<<<<<<< HEAD
     local entered = date("%a %b %d %H:%M", startTime)
     local left    = date("%a %b %d %H:%M", endTime)
 
@@ -219,12 +321,67 @@ local function FinishDungeon()
 
     running = false
     ClearActiveRun()
+=======
+
+    local entered = date("%a %b %d %H:%M", startTime)
+    local left = date("%a %b %d %H:%M", endTime)
+
+    local minutes = math.floor(duration / 60)
+    local seconds = duration % 60
+
+    -- Сохраняем результат
+    SaveRun(
+        runDate,
+        entered,
+        left,
+        duration,
+        xph
+    )
+
+    -- Вывод в чат
+    print("|cff00ff00Nova Dungeon XP|r")
+    print("|cff00ff00------------------------------------------------|r")
+
+    print("Dungeon      : "..dungeonName)
+
+    print(
+        string.format(
+            "Duration     : %dm %02ds",
+            minutes,
+            seconds
+        )
+    )
+
+    print(
+        "XP Gained    : "
+        ..
+        FormatXP(gainedXP)
+    )
+
+    print(
+        "XP / Hour    : "
+        ..
+        FormatXP(xph)
+    )
+
+    print(
+        "Mobs Killed  : "
+        ..
+        mobs
+    )
+
+    print("|cff00ff00------------------------------------------------|r")
+
+    running = false
+
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 end
 
 ------------------------------------------------
 -- Events
 ------------------------------------------------
 
+<<<<<<< HEAD
 addon:RegisterEvent("PLAYER_LOGIN")
 addon:RegisterEvent("PLAYER_ENTERING_WORLD")
 addon:RegisterEvent("PLAYER_XP_UPDATE")
@@ -298,10 +455,60 @@ addon:SetScript("OnEvent", function(self, event, ...)
         end
 
         return
+=======
+addon:RegisterEvent("PLAYER_ENTERING_WORLD")
+addon:RegisterEvent("PLAYER_XP_UPDATE")
+addon:RegisterEvent("CHAT_MSG_COMBAT_XP_GAIN")
+
+addon:SetScript(
+"OnEvent",
+function(self,event,...)
+
+    if event=="PLAYER_ENTERING_WORLD" then
+
+        local inInstance = IsInInstance()
+
+        if inInstance and not running then
+
+            StartDungeon()
+
+        elseif not inInstance and running then
+
+            FinishDungeon()
+
+        end
+
+    elseif event=="PLAYER_XP_UPDATE" then
+
+        if running then
+
+            local xp = UnitXP("player")
+
+            local diff = xp - startXP
+
+            if diff > 0 then
+
+                gainedXP = gainedXP + diff
+                startXP = xp
+
+            end
+
+        end
+
+    elseif event=="CHAT_MSG_COMBAT_XP_GAIN" then
+
+        if running then
+
+            mobs = mobs + 1
+
+        end
+
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
     end
 
 end)
 
+<<<<<<< HEAD
 -- OnUpdate: retry TryStartDungeon while pendingStart == true
 -- Gives up after 3 seconds and falls back to "Unknown Dungeon"
 addon:SetScript("OnUpdate", function(self, elapsed)
@@ -331,6 +538,8 @@ addon:SetScript("OnUpdate", function(self, elapsed)
     end
 end)
 
+=======
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 ------------------------------------------------
 -- UI Elements (create frame first, then all child elements)
 ------------------------------------------------
@@ -348,6 +557,7 @@ frame:SetMovable(true)
 frame:EnableMouse(true)
 frame:RegisterForDrag("LeftButton")
 
+<<<<<<< HEAD
 frame:SetScript("OnDragStart", function(self)
     self:StartMoving()
 end)
@@ -355,17 +565,40 @@ end)
 frame:SetScript("OnDragStop", function(self)
     self:StopMovingOrSizing()
 end)
+=======
+frame:SetScript(
+"OnDragStart",
+function(self)
+    self:StartMoving()
+end
+)
+
+frame:SetScript(
+"OnDragStop",
+function(self)
+    self:StopMovingOrSizing()
+end
+)
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 
 close = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
 close:SetPoint("TOPRIGHT", -5, -5)
 table.insert(UISpecialFrames, "NovaDungeonXPWindow")
 
 frame:SetBackdrop({
+<<<<<<< HEAD
     bgFile   = "Interface\\DialogFrame\\UI-DialogBox-Background",
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     tile     = true,
     tileSize = 16,
     edgeSize = 16
+=======
+bgFile="Interface\\DialogFrame\\UI-DialogBox-Background",
+edgeFile="Interface\\Tooltips\\UI-Tooltip-Border",
+tile=true,
+tileSize=16,
+edgeSize=16
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 })
 
 frame:Hide()
@@ -376,7 +609,11 @@ title:SetFont("Fonts\\ARIALN.TTF", 20)
 title:SetText("Nova Dungeon XP")
 
 ------------------------------------------------
+<<<<<<< HEAD
 -- Scroll Frame & Child
+=======
+-- Scroll Frame & Child (created before UpdateWindow!)
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 ------------------------------------------------
 
 scrollFrame = CreateFrame("ScrollFrame", "NovaDungeonXPScrollFrame", frame, "UIPanelScrollFrameTemplate")
@@ -389,11 +626,16 @@ scrollChild:SetHeight(1)
 scrollFrame:SetScrollChild(scrollChild)
 
 ------------------------------------------------
+<<<<<<< HEAD
 -- Row factory and table functions
+=======
+-- Functions that use UI elements (defined AFTER UI elements exist!)
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 ------------------------------------------------
 
 local function CreateRow(index)
     local row = {}
+<<<<<<< HEAD
 
     row.frame = CreateFrame("Frame", nil, scrollChild)
     row.frame:SetWidth(700)
@@ -419,12 +661,43 @@ local function CreateRow(index)
     row.xp   = row.frame:CreateFontString(nil, "OVERLAY")
     row.xph  = row.frame:CreateFontString(nil, "OVERLAY")
 
+=======
+    
+    -- Create a frame for the row to handle mouse events and background
+    row.frame = CreateFrame("Frame", nil, scrollChild)
+    row.frame:SetWidth(700)
+    row.frame:SetHeight(24)
+    local y = - ((index - 1) * 24)
+    row.frame:SetPoint("TOPLEFT", 0, y)
+    row.frame:EnableMouse(true)
+    
+    -- Background texture for highlighting
+    row.bg = row.frame:CreateTexture(nil, "BACKGROUND")
+    row.bg:SetAllPoints(row.frame)
+    row.bg:SetTexture(0, 0, 0, 0) -- Fully transparent by default
+    
+    -- OnEnter/OnLeave for hover highlight
+    row.frame:SetScript("OnEnter", function()
+        row.bg:SetTexture(0.3, 0.3, 0.3, 0.5) -- Semi-transparent gray
+    end)
+    row.frame:SetScript("OnLeave", function()
+        row.bg:SetTexture(0, 0, 0, 0) -- Back to transparent
+    end)
+    
+    -- Font strings parented to the row frame
+    row.num = row.frame:CreateFontString(nil, "OVERLAY")
+    row.name = row.frame:CreateFontString(nil, "OVERLAY")
+    row.time = row.frame:CreateFontString(nil, "OVERLAY")
+    row.xp = row.frame:CreateFontString(nil, "OVERLAY")
+    row.xph = row.frame:CreateFontString(nil, "OVERLAY")
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
     local font = "Fonts\\ARIALN.TTF"
     row.num:SetFont(font, 16)
     row.name:SetFont(font, 16)
     row.time:SetFont(font, 16)
     row.xp:SetFont(font, 16)
     row.xph:SetFont(font, 16)
+<<<<<<< HEAD
 
     row.num:SetPoint("TOPLEFT",   0, 0)
     row.name:SetPoint("TOPLEFT",  35, 0)
@@ -432,11 +705,26 @@ local function CreateRow(index)
     row.xp:SetPoint("TOPLEFT",   380, 0)
     row.xph:SetPoint("TOPLEFT",  500, 0)
 
+=======
+    
+    -- Position font strings relative to the row frame
+    row.num:SetPoint("TOPLEFT", 0, 0)
+    row.name:SetPoint("TOPLEFT", 35, 0)
+    row.time:SetPoint("TOPLEFT", 280, 0)
+    row.xp:SetPoint("TOPLEFT", 380, 0)
+    row.xph:SetPoint("TOPLEFT", 500, 0)
+    
+    -- Delete "X" button
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
     row.deleteBtn = CreateFrame("Button", nil, row.frame, "UIPanelCloseButton")
     row.deleteBtn:SetWidth(20)
     row.deleteBtn:SetHeight(20)
     row.deleteBtn:SetPoint("TOPRIGHT", 0, 0)
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
     return row
 end
 
@@ -456,13 +744,20 @@ local function SortRuns(a, b)
 end
 
 local function UpdateWindow()
+<<<<<<< HEAD
+=======
+
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
     for _, row in ipairs(rows) do
         row.num:SetText("")
         row.name:SetText("")
         row.time:SetText("")
         row.xp:SetText("")
         row.xph:SetText("")
+<<<<<<< HEAD
         row.deleteBtn:Hide()
+=======
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
     end
 
     local bestXPH = 0
@@ -487,6 +782,7 @@ local function UpdateWindow()
         end
 
         local color = ""
+<<<<<<< HEAD
         if bestXPH > 0 and (v.xph or 0) == bestXPH then
             color = "|cff00ff00"
         end
@@ -519,12 +815,40 @@ local function UpdateWindow()
 end
 
 function DeleteRun(runToDelete)
+=======
+        if (v.xph or 0) == bestXPH then
+            color = "|cff00ff00"
+        end
+        local reset = "|r"
+        rows[i].num:SetText(color..i..reset)
+        rows[i].name:SetText(color..(v.dungeon or "Unknown")..reset)
+        rows[i].time:SetText(color..string.format("%dm", v.time or 0)..reset)
+        rows[i].xp:SetText(color..FormatXP(v.xp or 0)..reset)
+        rows[i].xph:SetText(color..FormatXP(v.xph or 0)..reset)
+        
+        -- Set up delete button for this row
+        rows[i].deleteBtn:SetScript("OnClick", function()
+            DeleteRun(v)
+        end)
+    end
+
+    local numRows = #display
+    scrollChild:SetHeight(numRows * 24)
+end
+
+function DeleteRun(runToDelete)
+    -- Find and remove the run from history
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
     for i, run in ipairs(NovaDungeonXPDB.history) do
         if run == runToDelete then
             table.remove(NovaDungeonXPDB.history, i)
             break
         end
     end
+<<<<<<< HEAD
+=======
+    -- Refresh the display
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
     UpdateWindow()
 end
 
@@ -535,6 +859,10 @@ clearBtn:SetHeight(24)
 clearBtn:SetPoint("TOPRIGHT", -10, -30)
 clearBtn:SetText("Clear History")
 
+<<<<<<< HEAD
+=======
+-- Function to clear history with confirmation
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 local function ClearHistory()
     StaticPopupDialogs["NOVADUNGEONXP_CLEAR_HISTORY"] = {
         text = "Are you sure you want to clear all dungeon history?",
@@ -557,7 +885,11 @@ clearBtn:SetScript("OnClick", ClearHistory)
 frame:SetScript("OnShow", UpdateWindow)
 
 ------------------------------------------------
+<<<<<<< HEAD
 -- Header Buttons
+=======
+-- Header Buttons (defined after UpdateWindow!)
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 ------------------------------------------------
 
 headerButtons = {}
@@ -589,16 +921,25 @@ local function CreateHeaderButton(text, key, x)
     return btn
 end
 
+<<<<<<< HEAD
 headerButtons.num  = CreateHeaderButton("#",         nil,        20)
 headerButtons.name = CreateHeaderButton("Dungeon",   "dungeon",  55)
 headerButtons.time = CreateHeaderButton("Time",      "duration", 300)
 headerButtons.xp   = CreateHeaderButton("XP",        "xp",       400)
 headerButtons.xph  = CreateHeaderButton("XP / Hour", "xph",      520)
+=======
+headerButtons.num = CreateHeaderButton("#", nil, 20)
+headerButtons.name = CreateHeaderButton("Dungeon", "dungeon", 55)
+headerButtons.time = CreateHeaderButton("Time", "time", 300)
+headerButtons.xp = CreateHeaderButton("XP", "xp", 400)
+headerButtons.xph = CreateHeaderButton("XP / Hour", "xph", 520)
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 
 ------------------------------------------------
 -- Slash Commands
 ------------------------------------------------
 
+<<<<<<< HEAD
 SLASH_NOVADXP1 = "/ndxp"
 
 SlashCmdList["NOVADXP"] = function(msg)
@@ -606,19 +947,39 @@ SlashCmdList["NOVADXP"] = function(msg)
         NovaDungeonXPDB.history = {}
         print("|cff00ff00Nova Dungeon XP:|r history cleared")
     else
+=======
+SLASH_NOVADXP1="/ndxp"
+
+SlashCmdList["NOVADXP"]=function(msg)
+
+    if msg=="reset" then
+
+        NovaDungeonXPDB.history={}
+        print("NovaDungeonXP history cleared")
+
+    else
+
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
         if frame:IsShown() then
             frame:Hide()
         else
             UpdateWindow()
             frame:Show()
         end
+<<<<<<< HEAD
     end
+=======
+
+    end
+
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 end
 
 ------------------------------------------------
 -- Minimap Button
 ------------------------------------------------
 
+<<<<<<< HEAD
 local LDB    = LibStub("LibDataBroker-1.1")
 local DBIcon = LibStub("LibDBIcon-1.0")
 
@@ -641,6 +1002,30 @@ local minimapObject = LDB:NewDataObject(
             tooltip:AddLine("/ndxp - open window")
         end
     }
+=======
+local LDB = LibStub("LibDataBroker-1.1")
+local DBIcon = LibStub("LibDBIcon-1.0")
+
+local minimapObject = LDB:NewDataObject(
+"NovaDungeonXP",
+{
+    type = "launcher",
+    text = "Nova Dungeon XP",
+    icon = "Interface\\AddOns\\NovaDungeonXP\\ndxp",
+    OnClick = function(self, button)
+        if frame:IsShown() then
+            frame:Hide()
+        else
+            UpdateWindow()
+            frame:Show()
+        end
+    end,
+    OnTooltipShow = function(tooltip)
+        tooltip:AddLine("Nova Dungeon XP")
+        tooltip:AddLine("/ndxp - open window")
+    end
+}
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 )
 
 if not NovaDungeonXPMinimapDB then
@@ -650,7 +1035,13 @@ if not NovaDungeonXPMinimapDB then
 end
 
 DBIcon:Register(
+<<<<<<< HEAD
     "NovaDungeonXP",
     minimapObject,
     NovaDungeonXPMinimapDB
+=======
+"NovaDungeonXP",
+minimapObject,
+NovaDungeonXPMinimapDB
+>>>>>>> 84e4139800a1b333367c7459f47e00d6044064ce
 )
