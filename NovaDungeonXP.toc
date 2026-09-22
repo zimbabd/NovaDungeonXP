@@ -7,4 +7,3 @@
 
 embeds.xml
 NovaDungeonXP.lua
-NovaDungeonXPLive.lua
