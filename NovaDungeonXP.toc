@@ -2,8 +2,9 @@
 ## Title: Nova Dungeon XP
 ## Notes: Tracks dungeon XP, XP/hour and history
 ## Author: zimbabd
-## Version: 4.0
+## Version: 4.1
 ## SavedVariables: NovaDungeonXPDB, NovaDungeonXPMinimapDB
 
 embeds.xml
 NovaDungeonXP.lua
+NovaDungeonXPLive.lua

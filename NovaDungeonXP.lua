@@ -34,6 +34,7 @@ local startXPMax  = 0   -- UnitXPMax at run start, used for levelup detection
 
 local gainedXP = 0
 local mobs     = 0
+local liveXPReference = 0
 
 local sortKey = nil
 local sortAsc = true
@@ -131,15 +132,17 @@ local function RestoreActiveRun()
 end
 
 ------------------------------------------------
--- Instance type check (only party/raid = dungeon)
+-- Instance type check
 ------------------------------------------------
 
 local VALID_INSTANCE_TYPES = {
     party = true,
     raid  = true,
+    pvp   = true,
+    arena = true,
 }
 
-local function IsInDungeon()
+local function IsInTrackedInstance()
     local inInstance, instanceType = IsInInstance()
     return inInstance and VALID_INSTANCE_TYPES[instanceType]
 end
@@ -189,8 +192,8 @@ local function FinishDungeon()
     local endTime  = time()
     local duration = endTime - startTime
 
-    -- Ignore accidental entries under 60 s with zero XP
-    if duration < 60 and gainedXP == 0 then
+    -- Ignore runs shorter than five minutes
+    if duration < 300 then
         running = false
         ClearActiveRun()
         return
@@ -239,11 +242,11 @@ addon:SetScript("OnEvent", function(self, event, ...)
     end
 
     if event == "PLAYER_ENTERING_WORLD" then
-        local inDungeon = IsInDungeon()
+        local inTrackedInstance = IsInTrackedInstance()
 
-        if inDungeon and not running then
+        if inTrackedInstance and not running then
             StartDungeon()
-        elseif not inDungeon and running then
+        elseif not inTrackedInstance and running then
             FinishDungeon()
         end
 
@@ -262,6 +265,7 @@ addon:SetScript("OnEvent", function(self, event, ...)
             local diff = currentXP - startXP
             if diff > 0 then
                 gainedXP = gainedXP + diff
+                mobs = mobs + 1
             end
         else
             -- Levelup: player crossed a level boundary
@@ -269,6 +273,7 @@ addon:SetScript("OnEvent", function(self, event, ...)
             local toNextLevel = startXPMax - startXP
             if toNextLevel < 0 then toNextLevel = 0 end
             gainedXP = gainedXP + toNextLevel + currentXP
+            mobs = mobs + 1
         end
 
         startXP    = currentXP
@@ -277,21 +282,23 @@ addon:SetScript("OnEvent", function(self, event, ...)
         return
     end
 
-    -- Count mob kills via combat log
+    -- Count player kills via combat log. NPC kills are counted from XP updates
+    -- above, because UNIT_DIED flags are unreliable on some 3.3.5 clients.
     -- CHAT_MSG_COMBAT_XP_GAIN does not exist in 3.3.5 WotLK clients
     if event == "COMBAT_LOG_EVENT_UNFILTERED" then
         if not running then return end
 
-        local timestamp, subevent, hideCaster,
+        -- WotLK 3.3.5 does not include hideCaster in the event arguments.
+        local timestamp, subevent,
               sourceGUID, sourceName, sourceFlags, sourceRaidFlags,
               destGUID, destName, destFlags = ...
 
         if subevent == "UNIT_DIED" then
-            -- COMBATLOG_OBJECT_TYPE_NPC         = 0x0800
+            -- COMBATLOG_OBJECT_TYPE_PLAYER      = 0x0400
             -- COMBATLOG_OBJECT_REACTION_HOSTILE = 0x0040
-            local isNPC     = bit.band(destFlags or 0, 0x0800) ~= 0
+            local isPlayer  = bit.band(destFlags or 0, 0x0400) ~= 0
             local isHostile = bit.band(destFlags or 0, 0x0040) ~= 0
-            if isNPC and isHostile then
+            if isPlayer and isHostile then
                 mobs = mobs + 1
                 PersistActiveRun()
             end
@@ -367,6 +374,7 @@ frame:SetBackdrop({
     tileSize = 16,
     edgeSize = 16
 })
+frame:SetFrameStrata("FULLSCREEN_DIALOG")
 
 frame:Hide()
 
@@ -403,7 +411,8 @@ local function CreateRow(index)
     row.frame:EnableMouse(true)
 
     row.bg = row.frame:CreateTexture(nil, "BACKGROUND")
-    row.bg:SetAllPoints(row.frame)
+    row.bg:SetPoint("TOPLEFT", 0, -1)
+    row.bg:SetPoint("BOTTOMRIGHT", 0, 1)
     row.bg:SetTexture(0, 0, 0, 0)
 
     row.frame:SetScript("OnEnter", function()
